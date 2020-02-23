@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 
-const auth = async (req, res, next) => {
+const user = async (req, res, next) => {
   const token = req.header('Authorization').replace('Bearer ', '')
   const data = jwt.verify(token, process.env.JWT_KEY)
   try {
@@ -16,4 +16,24 @@ const auth = async (req, res, next) => {
     res.status(401).send({ error: 'Not authorized to access this resource' })
   }
 }
-module.exports = auth
+
+const admin = async (req, res, next) => {
+  const token = req.header('Authorization').replace('Bearer ', '')
+  const data = jwt.verify(token, process.env.JWT_KEY)
+  try {
+    const user = await User.findOne({ _id: data._id, admin: true, 'tokens.token': token })
+    if (!user) {
+      throw new Error()
+    }
+    req.user = user
+    req.token = token
+    next()
+  } catch (error) {
+    res.status(401).send({ error: 'Not authorized to access this resource. You are not an admin' })
+  }
+}
+
+module.exports = {
+  user,
+  admin
+}

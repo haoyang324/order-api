@@ -1,13 +1,22 @@
 const express = require('express')
 const auth = require('../middleware/auth')
 const userController = require('../controllers/userController')
+const adminController = require('../controllers/adminController')
 
 const router = express.Router()
+const userRouter = express.Router()
+const adminRouter = express.Router()
 
-router.post('/users', userController.createUser)
-router.post('/users/login', userController.login)
-router.get('/users/me', auth, userController.showSelfPage)
-router.post('/users/me/logout', auth, userController.logout)
-router.post('/users/me/logoutall', auth, userController.logoutAll)
+// User routes
+router.use('/users', userRouter)
+userRouter.post('/', userController.createUser)
+userRouter.post('/login', userController.login)
+userRouter.get('/me', auth.user, userController.showSelfPage)
+userRouter.post('/me/logout', auth.user, userController.logout)
+userRouter.post('/me/logoutall', auth.user, userController.logoutAll)
+
+// Admin routes
+router.use('/admin', adminRouter)
+adminRouter.get('/', auth.admin, adminController.showAdminPage)
 
 module.exports = router
