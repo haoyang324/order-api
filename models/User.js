@@ -25,10 +25,7 @@ const userSchema = mongoose.Schema({
     required: true,
     minLength: 6
   },
-  admin: {
-    type: Boolean,
-    default: false
-  },
+  admin: Boolean,
   tokens: [{
     token: {
       type: String,
