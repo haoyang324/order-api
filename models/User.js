@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema({
     lowercase: true,
     validate: (value) => {
       if (!validator.isEmail(value)) {
-        throw new Error({ error: 'Invalid Email address' })
+        throw new Error('Invalid Email address')
       }
     }
   },
@@ -56,11 +56,11 @@ userSchema.statics.findByCredentials = async (email, password) => {
   // Search for a user by email and password.
   const user = await UserModel.findOne({ email })
   if (!user) {
-    throw new Error({ error: 'Email not found' })
+    return new Error('Login failed! Email not found')
   }
   const isPasswordMatch = await bcrypt.compare(password, user.password)
   if (!isPasswordMatch) {
-    throw new Error({ error: 'Invalid password' })
+    return new Error('Login failed! Invalid password')
   }
   return user
 }
