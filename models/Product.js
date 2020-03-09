@@ -11,12 +11,12 @@ const productSchema = mongoose.Schema({
     required: true,
     trim: true
   },
-  quantity: {
-    type: Number,
-    required: true
-  },
   pricing: {
     type: mongoose.Schema.Types.Decimal128,
+    required: true
+  },
+  imgURL: {
+    type: String,
     required: true
   }
 })
