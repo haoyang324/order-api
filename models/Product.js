@@ -29,6 +29,15 @@ productSchema.pre('save', async function (next) {
   next()
 })
 
+productSchema.statics.deleteByID = async (id) => {
+  // Search for a user by email and password.
+  const product = await ProductModel.findOne({ _id: id })
+  if (!product) {
+    throw new Error('Delete failed! Product not found')
+  }
+  await ProductModel.deleteOne({ _id: id })
+}
+
 const ProductModel = mongoose.model('Product', productSchema)
 
 module.exports = ProductModel
