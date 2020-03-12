@@ -1,12 +1,12 @@
 const express = require('express')
 const auth = require('../middleware/auth')
-const router = express.Router()
+const imageRouter = express.Router()
 
 const upload = require('../utils/image-upload')
 
 const singleUpload = upload.single('image')
 
-router.post('/image-upload', auth.admin, function (req, res) {
+imageRouter.post('/', auth.admin, function (req, res) {
   singleUpload(req, res, function (err) {
     if (err) {
       return res.status(422).send({ errors: [{ title: 'File Upload Error', detail: err.message }] })
@@ -15,4 +15,4 @@ router.post('/image-upload', auth.admin, function (req, res) {
   })
 })
 
-module.exports = router
+module.exports = imageRouter
