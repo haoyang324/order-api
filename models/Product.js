@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const productSchema = mongoose.Schema({
-  title: {
+  name: {
     type: String,
     required: true,
     trim: true
@@ -22,9 +22,9 @@ const productSchema = mongoose.Schema({
 })
 
 productSchema.pre('save', async function (next) {
-  const exist = await ProductModel.findOne({ title: this.title })
+  const exist = await ProductModel.findOne({ name: this.name })
   if (exist) {
-    throw new Error('Duplicate product title')
+    throw new Error('Duplicate product name')
   }
   next()
 })

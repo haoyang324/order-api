@@ -29,7 +29,7 @@ const login = async (req, res) => {
   }
 }
 
-const showSelfPage = async (req, res) => {
+const showSelf = async (req, res) => {
   // View logged in user profile
   res.send(req.user)
 }
@@ -41,7 +41,7 @@ const logout = async (req, res) => {
       return token.token !== req.token
     })
     await req.user.save()
-    res.send()
+    res.status(201).send({ success: 'Logout success' })
   } catch (error) {
     res.status(500).send({ error: error.message })
   }
@@ -61,7 +61,7 @@ const logoutAll = async (req, res) => {
 module.exports = {
   createUser,
   login,
-  showSelfPage,
+  showSelf,
   logout,
   logoutAll
 }
