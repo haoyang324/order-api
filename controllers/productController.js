@@ -1,16 +1,16 @@
 const ProductModel = require('../models/Product')
 
-const getProduct = async (req, res) => {
+const get = async (req, res) => {
   const product = await ProductModel.findOne({ _id: req.params.id })
   res.send(product)
 }
 
-const getAllProduct = async (req, res) => {
+const getAll = async (req, res) => {
   const product = await ProductModel.find({})
   res.send(product)
 }
 
-const addProduct = async (req, res) => {
+const add = async (req, res) => {
   try {
     const product = new ProductModel(req.body)
     await product.save()
@@ -20,7 +20,7 @@ const addProduct = async (req, res) => {
   }
 }
 
-const updateProduct = async (req, res) => {
+const update = async (req, res) => {
   try {
     const filter = { _id: req.params.id }
     const update = req.body
@@ -31,7 +31,7 @@ const updateProduct = async (req, res) => {
   }
 }
 
-const deleteProduct = async (req, res) => {
+const del = async (req, res) => {
   try {
     await ProductModel.deleteByID(req.params.id)
     res.status(201).send({ success: 'Product was deleted successfully' })
@@ -41,9 +41,9 @@ const deleteProduct = async (req, res) => {
 }
 
 module.exports = {
-  getProduct,
-  getAllProduct,
-  addProduct,
-  updateProduct,
-  deleteProduct
+  get,
+  getAll,
+  add,
+  update,
+  del
 }
