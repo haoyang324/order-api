@@ -9,5 +9,6 @@ userRouter.post('/login', userController.login)
 userRouter.get('/me', auth.user, userController.showSelf)
 userRouter.post('/me/logout', auth.user, userController.logout)
 userRouter.post('/me/logoutall', auth.user, userController.logoutAll)
+userRouter.post('/me/defaultaddress', auth.user, userController.updateDefaultAddress)
 
 module.exports = userRouter

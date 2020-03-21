@@ -58,10 +58,22 @@ const logoutAll = async (req, res) => {
   }
 }
 
+const updateDefaultAddress = async (req, res) => {
+  try {
+    req.user.defaultAddress = req.body
+    console.log(req.body)
+    await req.user.save()
+    res.status(201).send({ success: 'Default address saved' })
+  } catch (error) {
+    res.status(500).send({ error: error.message })
+  }
+}
+
 module.exports = {
   createUser,
   login,
   showSelf,
   logout,
-  logoutAll
+  logoutAll,
+  updateDefaultAddress
 }
