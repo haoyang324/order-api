@@ -2,15 +2,21 @@ const OrderModel = require('../models/Order')
 
 const create = async (req, res) => {
   try {
+    let totalValue = 0
+    req.body.products.forEach(product => {
+      totalValue = totalValue + product.price * product.quantity
+    })
+
     const orderInfo = {
       customerIdentity: req.body.customerIdentity,
       customerName: req.body.customerName,
       date: req.body.date,
       address: req.body.address,
       note: req.body.note,
-      value: req.body.value,
+      value: totalValue.toFixed(2),
       products: req.body.products
     }
+
     const order = new OrderModel(orderInfo)
     await order.save()
     res.status(201).send({ success: 'Order Placed' })

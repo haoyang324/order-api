@@ -34,7 +34,16 @@ const userSchema = mongoose.Schema({
       type: String,
       required: true
     }
-  }]
+  }],
+  defaultAddress: {
+    name: String,
+    phone: String,
+    address: String,
+    city: String,
+    province: String,
+    zip: String,
+    country: String
+  }
 })
 
 userSchema.pre('save', async function (next) {
