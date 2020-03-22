@@ -8,8 +8,8 @@ const create = async (req, res) => {
     })
 
     const orderInfo = {
-      customerIdentity: req.body.customerIdentity,
-      customerName: req.body.customerName,
+      customerIdentity: req.user ? req.user.email : 'Guest',
+      customerName: req.user ? req.user.name : 'Guest',
       date: req.body.date,
       address: req.body.address,
       note: req.body.note,

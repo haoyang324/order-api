@@ -4,8 +4,9 @@ const orderController = require('../controllers/orderController')
 
 const orderRouter = express.Router()
 
-orderRouter.post('/', orderController.create)
 orderRouter.get('/', auth.user, orderController.getAll)
+orderRouter.post('/order', auth.user, orderController.create)
+orderRouter.post('/guestorder', orderController.create)
 orderRouter.get('/:id', auth.user, orderController.get)
 orderRouter.put('/:id', auth.user, orderController.update)
 orderRouter.delete('/:id', auth.user, orderController.del)
