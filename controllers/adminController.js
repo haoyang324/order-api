@@ -6,7 +6,7 @@ const showAdminPage = async (req, res) => {
   res.send(req.user)
 }
 
-const getOrders = async (req, res) => {
+const getAllOrders = async (req, res) => {
   const orders = await OrderModel.find({})
   res.send(orders)
 }
@@ -18,6 +18,6 @@ const getUsers = async (req, res) => {
 
 module.exports = {
   showAdminPage,
-  getOrders,
+  getAllOrders,
   getUsers
 }

@@ -17,7 +17,8 @@ const orderSchema = mongoose.Schema({
   note: String,
   status: {
     type: String,
-    enum: ['Pending', 'Comfirmed', 'Completed', 'Canceled']
+    enum: ['Processing', 'Completed', 'Canceled'],
+    default: 'Processing'
   },
   value: mongoose.Schema.Types.Decimal128,
   products: [{
