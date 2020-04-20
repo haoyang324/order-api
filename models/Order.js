@@ -13,8 +13,7 @@ const orderSchema = mongoose.Schema({
     zip: String,
     country: String
   },
-  contact: Number,
-  note: String,
+  notes: String,
   status: {
     type: String,
     enum: ['Processing', 'Completed', 'Canceled'],

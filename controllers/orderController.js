@@ -12,7 +12,7 @@ const create = async (req, res) => {
       customerName: req.user ? req.user.name : 'Guest',
       date: req.body.date,
       address: req.body.address,
-      note: req.body.note,
+      notes: req.body.notes,
       value: totalValue.toFixed(2),
       products: req.body.products
     }
