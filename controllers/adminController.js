@@ -13,7 +13,6 @@ const getAllOrders = async (req, res) => {
 
 const updateOrder = async (req, res) => {
   try {
-    console.log(req.body)
     const filter = { _id: req.body._id }
     const update = req.body
     const opts = { runValidators: true }
@@ -31,9 +30,25 @@ const getAllUsers = async (req, res) => {
   res.send(users)
 }
 
+const updateUser = async (req, res) => {
+  try {
+    console.log(req.body)
+    const filter = { _id: req.body._id }
+    const update = req.body
+    const opts = { runValidators: true }
+
+    await UserModel.findOneAndUpdate(filter, update, opts)
+
+    res.status(201).send({ success: 'User was updated successfully by admin' })
+  } catch (error) {
+    res.status(400).send({ error: error.message })
+  }
+}
+
 module.exports = {
   showAdminPage,
   getAllOrders,
-  getUsers
   updateOrder,
+  getAllUsers,
+  updateUser
 }
