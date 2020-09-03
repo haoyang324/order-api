@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const productSchema = mongoose.Schema({
-  title: {
+  name: {
     type: String,
     required: true,
     trim: true
@@ -11,7 +11,7 @@ const productSchema = mongoose.Schema({
     required: true,
     trim: true
   },
-  pricing: {
+  price: {
     type: mongoose.Schema.Types.Decimal128,
     required: true
   },
@@ -22,12 +22,21 @@ const productSchema = mongoose.Schema({
 })
 
 productSchema.pre('save', async function (next) {
-  const exist = await ProductModel.findOne({ title: this.title })
+  const exist = await ProductModel.findOne({ name: this.name })
   if (exist) {
-    throw new Error('Duplicate product title')
+    throw new Error('Duplicate product name')
   }
   next()
 })
+
+productSchema.statics.deleteByID = async (id) => {
+  // Search for a user by email and password.
+  const product = await ProductModel.findOne({ _id: id })
+  if (!product) {
+    throw new Error('Delete failed! Product not found')
+  }
+  await ProductModel.deleteOne({ _id: id })
+}
 
 const ProductModel = mongoose.model('Product', productSchema)
 

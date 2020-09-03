@@ -25,13 +25,25 @@ const userSchema = mongoose.Schema({
     required: true,
     minLength: 6
   },
-  admin: Boolean,
+  admin: {
+    type: Boolean,
+    default: true
+  },
   tokens: [{
     token: {
       type: String,
       required: true
     }
-  }]
+  }],
+  defaultAddress: {
+    name: String,
+    phone: String,
+    address: String,
+    city: String,
+    province: String,
+    zip: String,
+    country: String
+  }
 })
 
 userSchema.pre('save', async function (next) {
