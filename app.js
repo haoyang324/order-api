@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path')
 const cors = require('cors')
 // const bodyParser = require('body-parser')
 
@@ -12,6 +13,8 @@ const app = express()
 
 app.use(express.json())
 app.use(cors())
+app.use(express.static(path.join(__dirname, 'public')))
+// app.use('/images', express.static(path.join(__dirname, 'public')))
 
 app.use('/admin', require('./routes/admin'))
 app.use('/users', require('./routes/users'))

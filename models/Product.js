@@ -1,3 +1,4 @@
+const fs = require('fs')
 const mongoose = require('mongoose')
 
 const productSchema = mongoose.Schema({
@@ -29,11 +30,27 @@ productSchema.pre('save', async function (next) {
   next()
 })
 
+// Remove image before update
+productSchema.pre('findOneAndUpdate', async function (next) {
+  const product = await ProductModel.findOne({ _id: this._conditions._id })
+  try {
+    fs.unlinkSync('./public' + product.imgURL)
+  } catch (error) {
+    console.log(error)
+  }
+  next()
+})
+
 productSchema.statics.deleteByID = async (id) => {
   // Search for a user by email and password.
   const product = await ProductModel.findOne({ _id: id })
   if (!product) {
     throw new Error('Delete failed! Product not found')
+  }
+  try {
+    fs.unlinkSync('./public' + product.imgURL)
+  } catch (error) {
+    console.log(error)
   }
   await ProductModel.deleteOne({ _id: id })
 }
