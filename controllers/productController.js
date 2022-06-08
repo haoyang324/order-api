@@ -2,11 +2,23 @@ const ProductModel = require('../models/Product')
 
 const get = async (req, res) => {
   const product = await ProductModel.findOne({ _id: req.params.id })
+  // Get request url
+  const requestURL = req.protocol + '://' + req.get('host')
+  if (product.imgURL[0] === '/') {
+    product.imgURL = requestURL + product.imgURL
+  }
   res.send(product)
 }
 
 const getAll = async (req, res) => {
   const product = await ProductModel.find({})
+  // Get request url
+  const requestURL = req.protocol + '://' + req.get('host')
+  product.forEach(element => {
+    if (element.imgURL[0] === '/') {
+      element.imgURL = requestURL + element.imgURL
+    }
+  })
   res.send(product)
 }
 
